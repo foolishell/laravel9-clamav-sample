@@ -66,6 +66,8 @@ web:
 	docker compose exec web bash
 app:
 	docker compose exec app bash
+clamav:
+	docker compose exec clamav sh
 migrate:
 	docker compose exec app php artisan migrate
 fresh:
