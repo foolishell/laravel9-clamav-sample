@@ -5,11 +5,13 @@ namespace App\Services;
 use Appwrite\ClamAV\Network;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Niisan\ClamAV\Scanner;
+use Niisan\ClamAV\Scanners\RemoteScanner;
 
 class FileManager
 {
     public function __construct(
-        private Network $network,
+        private Scanner $scanner,
     ) {
     }
 
@@ -21,11 +23,6 @@ class FileManager
      */
     public function isSecureFile(string $filePath)
     {
-        $fileName = basename($filePath);
-        Storage::disk('shared_volume')->put("${fileName}", );
-
-        Log::info("ping => " . ($this->network->ping() ? "pong" : "no reply"));
-
-        return $this->network->fileScan('/shared_volume/' . $fileName);
+        return $this->scanner->scan($filePath);
     }
 }

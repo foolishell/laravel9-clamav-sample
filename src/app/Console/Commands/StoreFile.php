@@ -33,8 +33,13 @@ class StoreFile extends Command
             $this->error('ファイルが存在しません。');
             return 1;
         }
-        $usecase->exec($filePath);
-
-        return 0;
+        
+        try {
+            $usecase->exec($filePath);
+            return 0;
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+            return 1;
+        }
     }
 }
