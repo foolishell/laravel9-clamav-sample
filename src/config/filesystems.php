@@ -44,6 +44,13 @@ return [
             'throw' => false,
         ],
 
+        'shared_volume' => [
+            'driver' => 'local',
+            'root' => '/shared_volume',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -57,6 +64,22 @@ return [
         ],
 
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Security
+    |--------------------------------------------------------------------------
+    |
+    | Filesystem security settings.
+    |
+    */
+    'securities' => [
+        'clamav' => [
+            'host' => env('CLAMAV_HOST', 'clamav'),
+            'port' => env('CLAMAV_PORT', 3310),
+        ]
+    ],
+
 
     /*
     |--------------------------------------------------------------------------

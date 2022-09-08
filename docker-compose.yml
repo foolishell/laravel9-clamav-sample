@@ -1,6 +1,7 @@
 version: "3.9"
 volumes:
   psysh-store:
+  shared-volume:
 services:
   app:
     build:
@@ -16,6 +17,7 @@ services:
         target: /root/.config/psysh
         volume:
           nocopy: true
+      - shared-volume:/shared_volume
     environment:
       - APP_DEBUG=${APP_DEBUG:-true}
       - APP_KEY=${APP_KEY:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
@@ -29,3 +31,5 @@ services:
     ports:
       - 3310:3310
       - 7357:7357
+    volumes:
+      - shared-volume:/shared_volume

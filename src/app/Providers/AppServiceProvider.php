@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Appwrite\ClamAV\Network;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(Network::class, function ($app) {
+            return new Network(
+                host: config('filesystems.securities.clamav.host'),
+                port: config('filesystems.securities.clamav.port'),
+            );
+        });
     }
 
     /**
