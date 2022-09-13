@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\ClamavLostConnectionException;
 use Appwrite\ClamAV\Network;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -23,6 +24,15 @@ class FileManager
      */
     public function isSecureFile(string $filePath)
     {
+        try {
+            $this->scanner->ping();
+        } catch (\RuntimeException $e) {
+            throw new ClamavLostConnectionException(
+                $e->getMessage(), 
+                config('filesystems.securities.clamav.host'), 
+                config('filesystems.securities.clamav.port'),
+            );
+        }
         return $this->scanner->scan($filePath);
     }
 }
